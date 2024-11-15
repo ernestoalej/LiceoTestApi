@@ -12,7 +12,7 @@ public static class DependencyInjections
 {
 	public static IServiceCollection AddApplicationLayer(this IServiceCollection services)
 	{
-		////services.AddAutoMapper(Assembly.GetExecutingAssembly());
+		services.AddAutoMapper(Assembly.GetExecutingAssembly());
 		services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(DependencyInjections).Assembly));
 		return services;
 	}

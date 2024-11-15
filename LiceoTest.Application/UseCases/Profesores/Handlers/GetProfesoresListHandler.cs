@@ -9,28 +9,26 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using LiceoTest.Application.UseCases.Profesores.Models;
+using AutoMapper.QueryableExtensions;
+using AutoMapper;
 
 namespace LiceoTest.Application.UseCases.Profesores.Handlers;
 public class GetProfesoresListHandler : IRequestHandler<GetProfesoresListQuery, IEnumerable<ProfesorModel>>
 {
 	private readonly ApplicationContext _context;
+	private readonly IMapper _mapper;
 
-	public GetProfesoresListHandler(ApplicationContext context)
+	public GetProfesoresListHandler(ApplicationContext context, IMapper mapper)
     {
 		_context = context ?? throw new ArgumentNullException(nameof(context));
+		_mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
 	}
 
 	public async Task<IEnumerable<ProfesorModel>> Handle(GetProfesoresListQuery request, CancellationToken cancellationToken)
 	{
 		var res = await _context.Profesores
-			.Select(p => new ProfesorModel
-			{
-				Id = p.Id,
-				Cedula = p.Cedula,
-				Nombres = p.Nombres,
-				Apellidos = p.Apellidos,
-				FechaNacimiento = p.FechaNacimiento
-			}).ToListAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
+			.ProjectTo<ProfesorModel>(_mapper.ConfigurationProvider)
+			.ToListAsync(cancellationToken);
 
 		return res;
 	}

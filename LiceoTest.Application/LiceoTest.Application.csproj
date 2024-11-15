@@ -7,7 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="UseCases\Profesores\Mappers\" />
     <Folder Include="UseCases\Profesores\Commands\" />
     <Folder Include="UseCases\Profesores\Extensions\" />
   </ItemGroup>
