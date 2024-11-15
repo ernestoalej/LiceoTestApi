@@ -1,4 +1,5 @@
 using LiceoTest.API;
+using LiceoTest.Application;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +12,8 @@ builder.Services.AddSwaggerGen();
 
 // Configurar las DependencyInjections donde está también la conexión de Base de datos:
 builder.Services.AddInfrastructure(builder.Configuration, builder.Environment.EnvironmentName == "Development");
+
+builder.Services.AddApplicationLayer();
 
 var app = builder.Build();
 
